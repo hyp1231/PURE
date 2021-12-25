@@ -2,3 +2,4 @@ bert_model/
 __pycache__/
 entity_output/
 scripts/
+bb19_dataset/
