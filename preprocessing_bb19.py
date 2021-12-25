@@ -72,13 +72,13 @@ if __name__ == '__main__':
             structured_doc = {
                 'doc_key': doc_id,
                 'sentences': [],
-                'ner': [],
-                'relations': []
+                'ner': [[]],
+                'relations': [[]]
             }
 
             # entity
             sent_wds = raw_text.split(' ')
-            structured_doc['sentences'].append(sent_wds)
+            structured_doc['sentences'].append(sent_wds[:250])
             ent_id2wd_id = {}
             for entity in ground_truth_entities:
                 pos_a, pos_b = entity['ent_pos']
@@ -95,7 +95,7 @@ if __name__ == '__main__':
                         end_wid = max(end_wid, wid)
                     cur_wd_len_sum += len(wd) + 1
                 if begin_wid is not None and begin_wid <= end_wid:
-                    structured_doc['ner'].append([begin_wid, end_wid, entity['ent_type']])
+                    structured_doc['ner'][0].append([begin_wid, end_wid, entity['ent_type']])
                     ent_id2wd_id[entity['ent_id']] = (begin_wid, end_wid)
 
             # relation
@@ -106,6 +106,6 @@ if __name__ == '__main__':
                 if ent_s in ent_id2wd_id and ent_t in ent_id2wd_id:
                     bound_s = ent_id2wd_id[ent_s]
                     bound_t = ent_id2wd_id[ent_t]
-                    structured_doc['relations'].append([bound_s[0], bound_s[1], bound_t[0], bound_t[1], rel['rel_type']])
+                    structured_doc['relations'][0].append([bound_s[0], bound_s[1], bound_t[0], bound_t[1], rel['rel_type']])
 
             output_file.write(json.dumps(structured_doc) + '\n')
