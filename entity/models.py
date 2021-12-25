@@ -30,7 +30,7 @@ class BertForEntity(BertPreTrainedModel):
             FeedForward(input_dim=config.hidden_size*2+width_embedding_dim, 
                         num_layers=2,
                         hidden_dims=head_hidden_dim,
-                        activations=F.relu,
+                        activations=nn.ReLU(),
                         dropout=0.2),
             nn.Linear(head_hidden_dim, num_ner_labels)
         )
@@ -38,8 +38,8 @@ class BertForEntity(BertPreTrainedModel):
         self.init_weights()
 
     def _get_span_embeddings(self, input_ids, spans, token_type_ids=None, attention_mask=None):
-        sequence_output, pooled_output = self.bert(input_ids=input_ids, token_type_ids=token_type_ids, attention_mask=attention_mask)
-        
+        bert_res = self.bert(input_ids=input_ids, token_type_ids=token_type_ids, attention_mask=attention_mask)
+        sequence_output, pooled_output = bert_res.last_hidden_state, bert_res.pooler_output
         sequence_output = self.hidden_dropout(sequence_output)
 
         """

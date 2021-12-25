@@ -116,7 +116,7 @@ def setseed(seed):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--task', type=str, default=None, required=True, choices=['ace04', 'ace05', 'scierc'])
+    parser.add_argument('--task', type=str, default=None, required=True, choices=['ace04', 'ace05', 'scierc', 'bb19'])
 
     parser.add_argument('--data_dir', type=str, default=None, required=True, 
                         help="path to the preprocessed dataset")
