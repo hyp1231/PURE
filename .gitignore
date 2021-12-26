@@ -1,5 +1,6 @@
 bert_model/
 __pycache__/
 entity_output/
+relation_output/
 scripts/
 bb19_dataset/
